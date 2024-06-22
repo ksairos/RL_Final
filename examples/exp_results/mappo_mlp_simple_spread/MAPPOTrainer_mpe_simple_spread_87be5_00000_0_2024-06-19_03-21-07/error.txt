@@ -1,0 +1,62 @@
+Failure # 1 (occurred at 2024-06-19_03-21-10)
+Traceback (most recent call last):
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/tune/trial_runner.py", line 1117, in _process_trial_restore
+    self.trial_executor.fetch_result(trial)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/tune/ray_trial_executor.py", line 788, in fetch_result
+    result = ray.get(trial_future[0], timeout=DEFAULT_GET_TIMEOUT)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/_private/client_mode_hook.py", line 105, in wrapper
+    return func(*args, **kwargs)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/worker.py", line 1627, in get
+    raise value
+ray.exceptions.RayActorError: The actor died because of an error raised in its creation task, [36mray::MAPPOTrainer.__init__()[39m (pid=367902, ip=172.26.35.186)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/agents/trainer_template.py", line 137, in __init__
+    Trainer.__init__(self, config, env, logger_creator)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/agents/trainer.py", line 623, in __init__
+    super().__init__(config, logger_creator)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/tune/trainable.py", line 107, in __init__
+    self.setup(copy.deepcopy(self.config))
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/agents/trainer_template.py", line 147, in setup
+    super().setup(config)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/agents/trainer.py", line 776, in setup
+    self._init(self.config, self.env_creator)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/agents/trainer_template.py", line 171, in _init
+    self.workers = self._make_workers(
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/agents/trainer.py", line 858, in _make_workers
+    return WorkerSet(
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/evaluation/worker_set.py", line 87, in __init__
+    remote_spaces = ray.get(self.remote_workers(
+ray.exceptions.RayActorError: The actor died because of an error raised in its creation task, [36mray::RolloutWorker.__init__()[39m (pid=367901, ip=172.26.35.186)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/gym/envs/registration.py", line 676, in make
+    return registry.make(id, **kwargs)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/gym/envs/registration.py", line 490, in make
+    versions = self.env_specs.versions(namespace, name)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/gym/envs/registration.py", line 220, in versions
+    self._assert_name_exists(namespace, name)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/gym/envs/registration.py", line 297, in _assert_name_exists
+    raise error.NameNotFound(message)
+gym.error.NameNotFound: Environment `mpe_simple_spread` doesn't exist.
+
+During handling of the above exception, another exception occurred:
+
+[36mray::RolloutWorker.__init__()[39m (pid=367901, ip=172.26.35.186)
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/evaluation/rollout_worker.py", line 456, in __init__
+    self.env = env_creator(copy.deepcopy(self.env_context))
+  File "/home/ksairos/anaconda3/envs/rl_final/lib/python3.8/site-packages/ray/rllib/env/utils.py", line 54, in gym_env_creator
+    raise EnvError(ERR_MSG_INVALID_ENV_DESCRIPTOR.format(env_descriptor))
+ray.rllib.utils.error.EnvError: The env string you provided ('mpe_simple_spread') is:
+a) Not a supported/installed environment.
+b) Not a tune-registered environment creator.
+c) Not a valid env class string.
+
+Try one of the following:
+a) For Atari support: `pip install gym[atari] atari_py`.
+   For VizDoom support: Install VizDoom
+   (https://github.com/mwydmuch/ViZDoom/blob/master/doc/Building.md) and
+   `pip install vizdoomgym`.
+   For PyBullet support: `pip install pybullet`.
+b) To register your custom env, do `from ray import tune;
+   tune.register('[name]', lambda cfg: [return env obj from here using cfg])`.
+   Then in your config, do `config['env'] = [name]`.
+c) Make sure you provide a fully qualified classpath, e.g.:
+   `ray.rllib.examples.env.repeat_after_me_env.RepeatAfterMeEnv`
+

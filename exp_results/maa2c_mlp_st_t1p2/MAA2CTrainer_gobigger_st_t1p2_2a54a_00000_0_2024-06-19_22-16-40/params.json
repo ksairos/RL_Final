@@ -1,0 +1,93 @@
+{
+  "batch_mode": "complete_episodes",
+  "entropy_coeff": 0.01,
+  "env": "gobigger_st_t1p2",
+  "evaluation_interval": 50,
+  "framework": "torch",
+  "lambda": 1.0,
+  "lr": 0.0005,
+  "model": {
+    "custom_model": "Centralized_Critic_Model",
+    "custom_model_config": {
+      "agent_level_batch_update": true,
+      "agent_name_ls": [
+        "team0_0",
+        "team0_1"
+      ],
+      "algo_args": {
+        "batch_episode": 64,
+        "batch_mode": "complete_episodes",
+        "entropy_coeff": 0.01,
+        "lambda": 1.0,
+        "lr": 0.0005,
+        "use_gae": true,
+        "vf_loss_coeff": 1.0
+      },
+      "algorithm": "maa2c",
+      "checkpoint_end": true,
+      "checkpoint_freq": 100,
+      "env": "gobigger",
+      "env_args": {
+        "frame_limit": 1600,
+        "map_name": "st_t1p2"
+      },
+      "episode_limit": 1600,
+      "evaluation_interval": 50,
+      "fixed_batch_timesteps": 3200,
+      "force_coop": false,
+      "framework": "torch",
+      "global_state_flag": false,
+      "local_dir": "",
+      "local_mode": false,
+      "mask_flag": false,
+      "model_arch_args": {
+        "core_arch": "mlp",
+        "encode_layer": "128-256",
+        "fc_layer": 2,
+        "hidden_state_size": 256,
+        "out_dim_fc_0": 128,
+        "out_dim_fc_1": 64
+      },
+      "num_agents": 2,
+      "num_cpus_per_worker": 1,
+      "num_gpus": 0,
+      "num_gpus_per_worker": 0,
+      "num_workers": 10,
+      "opp_action_in_cc": true,
+      "policy_mapping_info": {
+        "all_scenario": {
+          "all_agents_one_policy": true,
+          "description": "mixed scenarios to t>2 (num_teams > 1)",
+          "one_agent_one_policy": true,
+          "team_prefix": [
+            "team0_"
+          ]
+        }
+      },
+      "restore_path": {
+        "model_path": "",
+        "params_path": ""
+      },
+      "seed": 321,
+      "share_policy": "group",
+      "space_act": "Box(-1.0, 1.0, (2,), float64)",
+      "space_obs": "Dict(obs:Box(-1000000.0, 1000000.0, (238,), float64))",
+      "stop_iters": 9999999,
+      "stop_reward": 999999,
+      "stop_timesteps": 2000000
+    },
+    "max_seq_len": 1600
+  },
+  "multiagent": {
+    "policies": "{'shared_policy'}",
+    "policy_mapping_fn": "<function run_cc.<locals>.<lambda> at 0x7f6d419bdd30>"
+  },
+  "num_gpus": 0,
+  "num_gpus_per_worker": 0,
+  "num_workers": 10,
+  "seed": 321,
+  "simple_optimizer": false,
+  "train_batch_size": 3200,
+  "use_gae": true,
+  "vf_loss_coeff": 1.0
+}
